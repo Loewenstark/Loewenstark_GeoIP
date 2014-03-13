@@ -40,9 +40,4 @@ extends Mage_Core_Helper_Abstract
             'nl' => 'nl-NL',
         );
     }
-    
-    public function getDefaultCountry()
-    {
-        return 'US';
-    }
 }

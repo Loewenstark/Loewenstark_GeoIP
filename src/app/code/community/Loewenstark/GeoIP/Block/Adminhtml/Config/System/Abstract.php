@@ -7,9 +7,12 @@
   * @author    Mathis Klooss <mathis.klooss@mage-profis.de>
   * @copyright 2014 Loewenstark Web-Solution GmbH (http://www.mage-profis.de). All rights served.
   */
-class Loewenstark_GeoIP_Block_Adminhtml_Config_System_List
+abstract class Loewenstark_GeoIP_Block_Adminhtml_Config_System_Abstract
 extends Mage_Adminhtml_Block_System_Config_Form_Field_Array_Abstract
 {
+
+    protected $_label_locale = 'Locale';
+
 
     /**
      * 
@@ -34,7 +37,7 @@ extends Mage_Adminhtml_Block_System_Config_Form_Field_Array_Abstract
     protected function _prepareToRender()
     {
         $this->addColumn('locale', array(
-            'label' => Mage::helper('loewenstark_geoip')->__('Locale'),
+            'label' => Mage::helper('loewenstark_geoip')->__($this->_label_locale),
             'style' => 'width:100px',
         ));
         $this->addColumn('store', array(

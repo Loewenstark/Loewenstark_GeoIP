@@ -25,7 +25,7 @@ extends Mage_Core_Block_Html_Select
             {
                 foreach ($group->getStores() as $store)
                 {
-                    $options[$store->getId()] = $website->getName().' - '.$group->getName().' - '.$store->getName();
+                    $options[$store->getId()] = $store->getName().' - '.$group->getName().' - '.$website->getName();
                 }
             }
         }

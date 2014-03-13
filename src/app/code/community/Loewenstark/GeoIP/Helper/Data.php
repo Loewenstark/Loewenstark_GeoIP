@@ -13,20 +13,44 @@ extends Mage_Core_Helper_Abstract
     
     public function getIp()
     {
-        if(isset($_SERVER['REMOTE_ADDR']))
-        {
-            return $_SERVER['REMOTE_ADDR'];
-        }
-        return false;
+        return $this->_getIp();
     }
-    
+
+    /**
+     * @see http://dev.maxmind.com/geoip/legacy/codes/iso3166/
+     * 
+     * @return string
+     */
     public function getGeoCountry()
     {
-        $country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
-        if(empty($country))
-        {
-            $country = Mage::helper('loewenstark_geoip/config')->getDefaultCountry();
-        }
-        return $country;
+        return geoip_country_code_by_name($this->_getIp());
+    }
+    
+    /**
+     * @see http://www.php.net/manual/en/function.geoip-continent-code-by-name.php
+     * 
+     * @return string
+     */
+    public function getGeoContinent()
+    {
+        return geoip_continent_code_by_name($this->_getIp());
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    protected function _getIp()
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+    
+    /**
+     * 
+     * @return string get _SERVER['HTTP_ACCEPT_LANGUAGE']
+     */
+    public function getBrowserLanguage()
+    {
+        return $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     }
 }

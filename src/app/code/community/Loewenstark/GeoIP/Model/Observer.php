@@ -9,11 +9,20 @@
   */
 class Loewenstark_GeoIP_Model_Observer
 {
+    /**
+     * 
+     * @param type $event
+     */
     public function redirectEvent($event)
     {
         if(!$this->_getConfig()->isEnabled())
         {
-            var_dump($this->_getLanguage()->getLanguages(), $this->_getLanguage()->getCountries(), $this->_getLanguage()->getMainLanguages()); exit;
+            $action = $event->getControllerAction();
+            /* @var $action Mage_Core_Controller_Varien_Action */
+            $path = trim($action->getRequest()->getPathInfo(), '/');
+            
+            echo '<pre>';
+            var_dump($path,$this->_getLanguage()->getLanguages(), $this->_getLanguage()->getCurrentCountry(), $this->_getLanguage()->getCurrentContinent()); exit;
         }
         Mage::getSingleton('core/session')->setGeoIp(true);
     }
@@ -71,5 +80,16 @@ class Loewenstark_GeoIP_Model_Observer
     protected function _getHelper()
     {
         return Mage::helper('loewenstark_geoip');
+    }
+    
+    /**
+     * 
+     * @param string $url
+     * @param array $params
+     * @return string
+     */
+    protected function getUrl($url = '', $params = array())
+    {
+        return Mage::getUrl($url, $params);
     }
 }

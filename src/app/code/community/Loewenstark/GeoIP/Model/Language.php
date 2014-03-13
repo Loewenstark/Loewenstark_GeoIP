@@ -19,13 +19,15 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
     {
         if(!$this->hasData('languages_data'))
         {
-            $country = $this->_getHelper()->getGeoCountry();
+            $country = $this->getCurrentCountry(); // get Current Country by IP
             // parse browser languages
             $countries = array($country);
-            if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+            $lang = $this->_getHelper()->getBrowserLanguage();
+            if(!empty($lang))
             {
                 $langs = array();
-                $split = array_filter((array)explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']));
+                $split = array_filter((array)explode(';', $lang));
+                unset($lang);
                 foreach($split as $_split)
                 {
                     foreach(array_filter((array)explode(',', $_split)) as $_row)
@@ -33,28 +35,37 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
                         if(substr($_row, 0, 2) != 'q=')
                         {
                             $short = $_row;
-                            if($length = strpos($_row, '-'))
+                            $normalLang = null;
+                            if($length = strpos($_row, '-')) // split code in 2 parts: de-DE will be $short = de; $part = DE
                             {
                                 $short = substr($_row, 0, $length);
                                 $part = substr($_row, ($length+1));
                                 $countries[] = $part;
                                 if(strtolower($part) == $short || $short == 'en')
                                 {
+                                    $normalLang = $_row;
                                     $_row = $short;
                                 }
+                            } else { // if there is de-AT, we will add also de-DE
+                                $normalLang = $_row.'-'.$this->_mapCountry($_row);
                             }
+                            // if there is only the language without country definition we will add the country code
                             if(!strpos($_row, '-'))
                             {
                                 $_row = $_row.'-'.$country;
                             }
-                            if(!in_array($_row, $langs[$short]) && in_array($short, $this->_getConfig()->getLanguages()))
+                            
+                            $langs[$short][] = $this->_isoLangCode($_row);
+                            // always add normal language like de-DE / fr-DE
+                            if($normalLang)
                             {
-                                $langs[$short][] = $_row;
+                                $langs[$short][] = $this->_isoLangCode($normalLang);
                             }
+                            $langs[$short] = array_unique($langs[$short]);
                         }
                     }
                 }
-                if(empty($langs))
+                if(empty($langs)) // fall back if there is no language
                 {
                     $langs = array($country => array($country.'-'.$country));
                 }
@@ -72,7 +83,9 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
     }
     
     /**
+     * get All Languages
      * 
+     * @return mixed
      */
     public function getLanguages()
     {
@@ -95,7 +108,9 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
     }
     
     /**
+     * get all languages form data
      * 
+     * return mixed
      */
     public function getMainLanguages()
     {
@@ -120,8 +135,63 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
         }
         return $this->getData('country');
     }
+
+    /**
+     * get Current Country ISO-Code2
+     * 
+     * @return string
+     */
+    public function getCurrentCountry()
+    {
+        return $this->_getHelper()->getGeoCountry();
+    }
+
+    /**
+     * get Current Continent ISO-Code2
+     * 
+     * @return string
+     */
+    public function getCurrentContinent()
+    {
+        return $this->_getHelper()->getGeoContinent();
+    }
     
     /**
+     * mapping for languages without the same country like en-GB/en-US etc...
+     * 
+     * @param string $code
+     * @return string
+     */
+    protected function _mapCountry($code)
+    {
+        $code = strtoupper($code);
+        if($code == 'EN')
+        {
+            $code = 'US';
+            if($this->getCurrentContinent() == 'EU')
+            {
+                $code = 'GB';
+            }
+        }
+        return $code;
+    }
+
+    /**
+     * the first 2 letter will be always lowercased and the last 2 chars are uppercase
+     * 
+     * @param string $code
+     * @return string Language Code
+     */
+    protected function _isoLangCode($code)
+    {
+        $first = strtolower(substr($code,0, 3));
+        $second = $this->_mapCountry(substr($code, 3, 2));
+        return strtolower($first).strtoupper($second);
+    }
+
+    /**
+     * 
+     * system configuration
      * 
      * @return Loewenstark_GeoIP_Helper_Config
      */
@@ -131,6 +201,7 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
     }
 
     /**
+     * providing some data like, ip etc
      * 
      * @return Loewenstark_GeoIP_Helper_Data
      */
