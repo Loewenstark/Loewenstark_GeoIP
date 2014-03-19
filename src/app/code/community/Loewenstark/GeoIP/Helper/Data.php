@@ -8,9 +8,9 @@
   * @copyright 2014 Loewenstark Web-Solution GmbH (http://www.mage-profis.de). All rights served.
   */
 class Loewenstark_GeoIP_Helper_Data
-extends Mage_Core_Helper_Abstract
+extends Loewenstark_GeoIP_Helper_Abstract
 {
-    
+
     public function getIp()
     {
         return $this->_getIp();
@@ -25,7 +25,7 @@ extends Mage_Core_Helper_Abstract
     {
         return geoip_country_code_by_name($this->_getIp());
     }
-    
+
     /**
      * @see http://www.php.net/manual/en/function.geoip-continent-code-by-name.php
      * 
@@ -35,7 +35,7 @@ extends Mage_Core_Helper_Abstract
     {
         return geoip_continent_code_by_name($this->_getIp());
     }
-    
+
     /**
      * 
      * @return string
@@ -44,7 +44,7 @@ extends Mage_Core_Helper_Abstract
     {
         return $_SERVER['REMOTE_ADDR'];
     }
-    
+
     /**
      * 
      * @return string get _SERVER['HTTP_ACCEPT_LANGUAGE']
@@ -52,5 +52,14 @@ extends Mage_Core_Helper_Abstract
     public function getBrowserLanguage()
     {
         return $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getUserAgent()
+    {
+        return $_SERVER['HTTP_USER_AGENT'];
     }
 }

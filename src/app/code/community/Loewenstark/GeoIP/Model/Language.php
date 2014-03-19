@@ -23,6 +23,7 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
             // parse browser languages
             $countries = array($country);
             $lang = $this->_getHelper()->getBrowserLanguage();
+            $i = 0;
             if(!empty($lang))
             {
                 $langs = array();
@@ -34,6 +35,11 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
                     {
                         if(substr($_row, 0, 2) != 'q=')
                         {
+                            if($i > 9)
+                            {
+                                break 2; // no one will have more than 9
+                            }
+                            $i++;
                             $short = $_row;
                             $normalLang = null;
                             if($length = strpos($_row, '-')) // split code in 2 parts: de-DE will be $short = de; $part = DE

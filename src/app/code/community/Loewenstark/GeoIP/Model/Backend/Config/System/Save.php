@@ -26,7 +26,7 @@ extends Mage_Adminhtml_Model_System_Config_Backend_Serialized
             $this->setValue(Mage::helper('core')->jsonEncode($this->getValue()));
         }
     }
-    
+
     protected function _afterLoad()
     {
         if (!is_array($this->getValue())) {
@@ -34,7 +34,7 @@ extends Mage_Adminhtml_Model_System_Config_Backend_Serialized
             $this->setValue(empty($value) ? false : Mage::helper('core')->jsonDecode($value));
         }
     }
-    
+
     /**
      * 
      * @param mixed $value

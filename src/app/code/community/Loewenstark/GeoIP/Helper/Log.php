@@ -7,12 +7,12 @@
   * @author    Mathis Klooss <mathis.klooss@mage-profis.de>
   * @copyright 2014 Loewenstark Web-Solution GmbH (http://www.mage-profis.de). All rights served.
   */
-class Loewenstark_GeoIP_Helper_System
+class Loewenstark_GeoIP_Helper_Log
 extends Loewenstark_GeoIP_Helper_Abstract
 {
     
-    public function getContientComment()
+    public function log($message)
     {
-        return $this->__('Examples: NA, EU, SA<br /><a target="_blank" href="http://www.php.net/manual/en/function.geoip-continent-code-by-name.php">Continent Codes</a>');
+        Mage::log($message, null, 'geoip.log', $this->_getConfig()->isLogEnabled());
     }
 }

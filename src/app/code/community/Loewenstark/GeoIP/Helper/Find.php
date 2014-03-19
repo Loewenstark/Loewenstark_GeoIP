@@ -8,7 +8,7 @@
   * @copyright 2014 Loewenstark Web-Solution GmbH (http://www.mage-profis.de). All rights served.
   */
 class Loewenstark_GeoIP_Helper_Find
-extends Mage_Core_Helper_Abstract
+extends Loewenstark_GeoIP_Helper_Abstract
 {
     
     public function setLanguage(Varien_Object $language)
