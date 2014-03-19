@@ -11,16 +11,22 @@ class Loewenstark_GeoIP_Model_Redirect
             'model' => $this
         ));
     }
-    
+
     /**
      * 
      */
     public function run()
     {
+        $obj = new Varien_Object();
+        $obj->setRun(true); //
         Mage::dispatchEvent('loewenstark_geoip_model_redirect_before_run', array(
-            'model' => $this
+            'model' => $this,
+            'obj' => $obj,
         ));
-        $this->redirect();
+        if($obj->getRun())
+        {
+            $this->redirect();
+        }
         // will only trigger when redirect is false
         Mage::dispatchEvent('loewenstark_geoip_model_redirect_after_run', array(
             'model' => $this
