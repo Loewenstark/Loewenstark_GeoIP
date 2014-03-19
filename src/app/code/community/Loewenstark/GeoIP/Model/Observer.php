@@ -29,4 +29,13 @@ class Loewenstark_GeoIP_Model_Observer
     {
         return Mage::getSingleton('core/session');
     }
+    
+    /**
+     * 
+     * @return Loewenstark_GeoIP_Helper_Config
+     */
+    protected function _getConfig()
+    {
+        return Mage::helper('loewenstark_geoip/config');
+    }
 }

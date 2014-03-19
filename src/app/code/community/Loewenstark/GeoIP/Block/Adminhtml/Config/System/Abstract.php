@@ -25,7 +25,7 @@ extends Mage_Adminhtml_Block_System_Config_Form_Field_Array_Abstract
                 'loewenstark_geoip/adminhtml_config_system_list_stores', '',
                 array('is_render_to_js_template' => true)
             );
-            $this->_groupRenderer->setClass('list_stores');
+            $this->_groupRenderer->setClass('list');
             $this->_groupRenderer->setExtraParams('style="width:250px"');
         }
         return $this->_groupRenderer;
@@ -56,7 +56,7 @@ extends Mage_Adminhtml_Block_System_Config_Form_Field_Array_Abstract
     protected function _prepareArrayRow(Varien_Object $row)
     {
         $row->setData(
-            'option_extra_attr_' . $this->_getAttrRenderer()->calcOptionHash($row->getData('list')),
+            'option_extra_attr_' . $this->_getAttrRenderer()->calcOptionHash($row->getData('store')),
             'selected="selected"'
         );
     }

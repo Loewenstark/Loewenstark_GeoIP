@@ -9,6 +9,14 @@
   */
 class Loewenstark_GeoIP_Model_Language extends Varien_Object
 {
+    protected function _construct()
+    {
+        parent::_construct();
+        Mage::dispatchEvent('loewenstark_geoip_model_language', array(
+            'model' => $this
+        ));
+    }
+
     /**
      * get Language and iso Language
      * @example array('de' => array('de-AT', 'de-DE'))
@@ -87,7 +95,7 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
         }
         return $this->getData('languages_data');
     }
-    
+
     /**
      * get All Languages
      * 
@@ -112,7 +120,7 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
         }
         return $this->getData('languages');
     }
-    
+
     /**
      * get all languages form data
      * 
@@ -126,7 +134,7 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
         }
         return $this->getData('main_languages');
     }
-    
+
     /**
      * get Languages by Country
      * @example array('at' => array('de'))
@@ -161,7 +169,7 @@ class Loewenstark_GeoIP_Model_Language extends Varien_Object
     {
         return $this->_getHelper()->getGeoContinent();
     }
-    
+
     /**
      * mapping for languages without the same country like en-GB/en-US etc...
      * 
