@@ -63,7 +63,7 @@ extends Loewenstark_GeoIP_Helper_Abstract
      */
     protected function _getIp()
     {
-        return '212.202.123.149'; //$_SERVER['REMOTE_ADDR'];
+        return $_SERVER['REMOTE_ADDR'];
     }
 
     /**
