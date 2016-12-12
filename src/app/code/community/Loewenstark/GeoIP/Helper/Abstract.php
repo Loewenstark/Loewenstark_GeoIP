@@ -10,6 +10,9 @@
 abstract class Loewenstark_GeoIP_Helper_Abstract
 extends Mage_Core_Helper_Abstract
 {
+
+    const REGISTER_EXCEPTION = 'loegeoip_exception';
+
     public function __construct()
     {
         Mage::dispatchEvent('loewenstark_geoip_helper_abstract', array(

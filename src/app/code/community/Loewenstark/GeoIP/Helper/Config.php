@@ -18,7 +18,7 @@ extends Loewenstark_GeoIP_Helper_Abstract
      */
     public function isEnabled($part = 'general')
     {
-        if(!function_exists('geoip_country_code_by_name'))
+        if (Mage::registry(self::REGISTER_EXCEPTION))
         {
             return false;
         }
@@ -39,7 +39,7 @@ extends Loewenstark_GeoIP_Helper_Abstract
         }
         return Mage::getStoreConfigFlag('loewenstarkgeoip/'.$part.'/active');
     }
-    
+
     /**
      * 
      * @return type
@@ -48,7 +48,7 @@ extends Loewenstark_GeoIP_Helper_Abstract
     {
         return Mage::getStoreConfigFlag('loewenstarkgeoip/general/logactive');
     }
-    
+
     /**
      * 
      * @return array

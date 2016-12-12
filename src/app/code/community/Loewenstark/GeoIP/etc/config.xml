@@ -46,4 +46,12 @@
             </modules>
         </translate>
     </adminhtml>
+    <default>
+        <loewenstarkgeoip>
+            <general>
+                <mmdbpath>var/mmdb/GeoLite2-Country.mmdb</mmdbpath>
+                <use_geoip2>1</use_geoip2>
+            </general>
+        </loewenstarkgeoip>
+    </default>
 </config>

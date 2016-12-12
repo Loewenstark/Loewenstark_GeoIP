@@ -1,0 +1,6 @@
+[submodule "geoip2"]
+	path = geoip2
+	url = https://github.com/maxmind/GeoIP2-php.git
+[submodule "maxmind-db"]
+	path = maxmind-db
+	url = https://github.com/maxmind/MaxMind-DB-Reader-php.git

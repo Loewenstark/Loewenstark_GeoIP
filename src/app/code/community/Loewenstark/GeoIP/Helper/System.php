@@ -13,6 +13,6 @@ extends Loewenstark_GeoIP_Helper_Abstract
     
     public function getContientComment()
     {
-        return $this->__('Examples: NA, EU, SA<br /><a target="_blank" href="http://www.php.net/manual/en/function.geoip-continent-code-by-name.php">Continent Codes</a>');
+        return $this->__('Examples: NA, EU, SA<br /><a target="_blank" href="%s">Continent Codes</a>', 'http://www.php.net/manual/en/function.geoip-continent-code-by-name.php');
     }
 }
